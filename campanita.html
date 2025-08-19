@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Para ti 💘</title>
+  <style>
+    :root{
+      --bg:#0b0b0f;         
+      --bg-soft:#121218;    
+      --red:#ff2d55;        
+      --red-soft:#ff5f7a;   
+      --text:#f6f7fb;       
+      --muted:#b6b7c2;      
+      --purple:#a259ff;     
+      --shadow: 0 10px 30px rgba(255,45,85,.25);
+      --glow-red: 0 0 12px rgba(255,45,85,.75), 0 0 30px rgba(255,45,85,.35);
+      --glow-purple: 0 0 12px rgba(162,89,255,.75), 0 0 30px rgba(162,89,255,.35);
+      --radius: 20px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, "Helvetica Neue", Arial;
+      background: var(--bg);
+      color:var(--text);
+      display:grid; place-items:center;
+    }
+
+    .app{
+      width:min(980px, 96vw); min-height:min(700px, 94vh);
+      background: var(--bg-soft);
+      border-radius:28px; padding:28px; position:relative; overflow:hidden;
+      box-shadow: var(--shadow);
+    }
+    header{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:6px 0 20px 0; border-bottom:1px dashed rgba(255,255,255,.08);
+    }
+    .brand{display:flex; align-items:center; gap:10px; font-weight:700;}
+    .dot{width:10px; height:10px; border-radius:50%; background:var(--red); box-shadow:var(--glow-red)}
+    .sub{color:var(--muted)}
+
+    .view{display:none}
+    .view.active{display:block}
+
+    .card{background:rgba(255,255,255,.03); padding:24px; border-radius:var(--radius);}
+
+    .btn{border:none; cursor:pointer; font-weight:700; padding:14px 20px; border-radius:16px; color:var(--text); background:var(--red); box-shadow: var(--glow-red);} 
+    .btn.secondary{ background:transparent; border:1px solid rgba(255,255,255,.14); color:var(--muted) }
+
+    .input{width:100%; padding:14px; border-radius:14px; border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.03); color:var(--text)}
+
+    .neon{font-weight:900; font-size: 28px; color:var(--red); text-shadow: var(--glow-red); text-align:center}
+    .center{text-align:center}
+
+    .progress{ height:10px; width:100%; border-radius:999px; background:rgba(255,255,255,.08); overflow:hidden }
+    .progress > span{ display:block; height:100%; width:0; background:linear-gradient(90deg, var(--red), var(--red-soft)); animation:load 3s ease forwards }
+    @keyframes load{ to{ width:100% } }
+
+    .infinity{ width:200px; margin:auto; filter:drop-shadow(0 0 12px rgba(255,45,85,.6)); }
+    .infinity path{ stroke:var(--red); stroke-width:14; fill:none; stroke-dasharray: 1200; stroke-dashoffset:1200; animation: draw 2.8s ease forwards; }
+    @keyframes draw{ to{ stroke-dashoffset:0 } }
+
+    .tap{margin-top:18px; font-weight:700; color:var(--muted); animation: pulse 1.2s ease-in-out infinite alternate; cursor:pointer}
+    @keyframes pulse{ from{ transform:scale(1)} to{ transform:scale(1.05)} }
+
+    .menu{display:grid; grid-template-columns: repeat(3,1fr); gap:18px; margin-top:14px}
+    .tile{border-radius:22px; padding:40px 20px; background:#0f0f14; cursor:pointer; text-align:center;}
+    .tile:hover{box-shadow: var(--glow-red);}
+
+    .photo-grid{display:grid; grid-template-columns: repeat(auto-fill, minmax(140px,1fr)); gap:12px; margin-top:20px}
+    .photo{width:100%; border-radius:12px;}
+
+    video{width:100%; border-radius:12px; margin-top:20px}
+
+    .back{margin-bottom:20px}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="brand"><span class="dot"></span><span>OMARCITO ♥</span></div>
+      <div class="sub" id="saludo">Bienvenida</div>
+    </header>
+
+    <!-- Nombre -->
+    <section class="view active" id="v-intro">
+      <div class="card">
+        <h1 class="neon">Para ti, con mucho amor</h1>
+        <p class="sub">Escribe tu nombre para empezar ✨</p>
+        <input id="nombre" class="input" placeholder="Ej: Jenniffer" />
+        <button class="btn" id="btn-enviar">Enviar</button>
+      </div>
+    </section>
+
+    <!-- Calculando -->
+    <section class="view center" id="v-calc">
+      <h2 class="neon">Calculando cuánto Omarcito te quiere…</h2>
+      <div class="progress"><span></span></div>
+    </section>
+
+    <!-- Infinito -->
+    <section class="view center" id="v-infinito">
+      <div class="infinity">
+        <svg viewBox="0 0 400 200">
+          <path d="M50,100 C50,40 150,40 200,100 C250,160 350,160 350,100 C350,40 250,40 200,100 C150,160 50,160 50,100" />
+        </svg>
+      </div>
+      <h3 class="neon">No existen números que puedan decir lo mucho que Omarcito te ama.</h3>
+      <p class="sub">Su amor por ti es infinito ♾️</p>
+      <button class="btn tap" id="btn-tocar">Toca la pantalla</button>
+    </section>
+
+    <!-- Menú -->
+    <section class="view" id="v-menu">
+      <h2 class="neon" id="hey"></h2>
+      <p class="sub">Elige una opción:</p>
+      <div class="menu">
+        <div class="tile" data-to="v-fotos">📸 Fotos</div>
+        <div class="tile" data-to="v-videos">🎬 Video</div>
+        <div class="tile" data-to="v-tulipan">🌷 Tulipán</div>
+      </div>
+    </section>
+
+    <!-- Fotos -->
+    <section class="view" id="v-fotos">
+      <button class="btn secondary back" data-back>Volver</button>
+      <h2 class="neon">Nuestros momentos</h2>
+      <div class="photo-grid">
+        <img src="https://drive.google.com/uc?export=download&id=11P459fKXxPnoKudvwAIW3vimZ52NIGQ2" class="photo" alt="foto1" />
+        <img src="WhatsApp Image 2025-08-17 at 8.00.48 PM (2).jpeg" class="photo" alt="foto2" />
+        <img src="WhatsApp Image 2025-08-17 at 8.00.48 PM.jpeg" class="photo" alt="foto3" />
+        <img src="WhatsApp Image 2025-08-17 at 8.00.49 PM (1).jpeg" class="photo" alt="foto3" />
+        <img src="w" class="photo" alt="foto3" />
+      </div>
+    </section>
+
+    <!-- Video -->
+    <section class="view" id="v-videos">
+      <button class="btn secondary back" data-back>Volver</button>
+      <h2 class="neon">Nuestro video</h2>
+      <video width="300" controls autoplay muted>
+        <source src="https://player.vimeo.com/video/1110796656?autoplay=1&muted=1&badge=0&autopause=0&player_id=0" type="video/mp4">
+        Tu navegador no soporta el video.
+      </video>
+
+    </section>
+
+    <!-- Tulipán -->
+    <section class="view" id="v-tulipan">
+      <button class="btn secondary back" data-back>Volver</button>
+      <div class="center">
+        <svg class="infinity" viewBox="0 0 200 300">
+          <path d="M100 180 C100 230, 95 260, 100 290" stroke="purple" fill="none" />
+          <path d="M70 130 C85 90, 115 90, 130 130 C135 150, 120 170, 100 170 C80 170, 65 150, 70 130 Z" stroke="purple" fill="violet" />
+        </svg>
+        <p class="sub">Un tulipán para ti mi amor </p>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const views = document.querySelectorAll('.view');
+    const go = id => { views.forEach(v => v.classList.remove('active')); document.getElementById(id).classList.add('active'); };
+
+    const nombre = document.getElementById('nombre');
+    document.getElementById('btn-enviar').addEventListener('click', ()=>{
+      const n = nombre.value || 'mi amor';
+      document.getElementById('saludo').textContent = `Hola, ${n}`;
+      go('v-calc');
+      setTimeout(()=> go('v-infinito'), 3000);
+    });
+
+    document.getElementById('btn-tocar').addEventListener('click', ()=>{
+      const n = nombre.value || 'mi amor';
+      document.getElementById('hey').textContent = `Hey, ${n}`;
+      go('v-menu');
+    });
+
+    document.querySelectorAll('.tile').forEach(t=> t.addEventListener('click', ()=> go(t.dataset.to)));
+    document.querySelectorAll('[data-back]').forEach(b=> b.addEventListener('click', ()=> go('v-menu')));
+  </script>
+</body>
+</html>
